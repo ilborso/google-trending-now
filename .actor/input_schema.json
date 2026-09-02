@@ -1,0 +1,99 @@
+{
+    "title": "Google Trending Now Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "geo": {
+            "title": "Country Code",
+            "sectionCaption": "Trend Filters",
+            "type": "string",
+            "description": "Two-letter country code for geographic filtering (e.g. US, IT, GB, DE).",
+            "editor": "textfield",
+            "default": "US",
+            "prefill": "US"
+        },
+        "hl": {
+            "title": "Language Code",
+            "type": "string",
+            "description": "Language code for the response (e.g. en, it, es, de).",
+            "editor": "textfield",
+            "default": "en",
+            "prefill": "en"
+        },
+        "hours": {
+            "title": "Time Window (hours)",
+            "type": "integer",
+            "description": "How far back to look for trending searches.",
+            "editor": "select",
+            "default": 24,
+            "prefill": 24,
+            "enum": [4, 24, 48, 168],
+            "enumTitles": [
+                "Last 4 hours",
+                "Last 24 hours",
+                "Last 48 hours",
+                "Last 7 days (168 hours)"
+            ]
+        },
+        "cat": {
+            "title": "Category",
+            "type": "integer",
+            "description": "Category ID to filter trends. Use 0 for all categories.",
+            "editor": "select",
+            "default": 0,
+            "prefill": 0,
+            "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20],
+            "enumTitles": [
+                "All categories",
+                "Autos and Vehicles",
+                "Beauty and Fashion",
+                "Business and Finance",
+                "Entertainment",
+                "Food and Drink",
+                "Games",
+                "Health",
+                "Hobbies and Leisure",
+                "Jobs and Education",
+                "Law and Government",
+                "Other",
+                "Pets and Animals",
+                "Politics",
+                "Science",
+                "Shopping",
+                "Sports",
+                "Technology",
+                "Travel and Transportation",
+                "Climate"
+            ]
+        },
+        "sort": {
+            "title": "Sort Order",
+            "type": "string",
+            "description": "How to sort the trending results.",
+            "editor": "select",
+            "default": "relevance",
+            "prefill": "relevance",
+            "enum": ["relevance", "search_volume", "recency", "title"],
+            "enumTitles": [
+                "Relevance",
+                "Search Volume",
+                "Recency",
+                "Title (A-Z)"
+            ]
+        },
+        "status": {
+            "title": "Trend Status",
+            "type": "string",
+            "description": "Filter trends by their current status.",
+            "editor": "select",
+            "default": "all",
+            "prefill": "all",
+            "enum": ["all", "active"],
+            "enumTitles": [
+                "All trends",
+                "Active only"
+            ]
+        }
+    },
+    "required": []
+}

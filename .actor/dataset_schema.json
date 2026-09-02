@@ -1,0 +1,60 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "trends_overview": {
+            "title": "Trends Overview",
+            "transformation": {
+                "fields": ["title", "search_volume", "growth_percentage", "started_at", "status", "trend_url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "title": {
+                        "label": "Trend Title",
+                        "format": "text"
+                    },
+                    "search_volume": {
+                        "label": "Search Volume",
+                        "format": "number"
+                    },
+                    "growth_percentage": {
+                        "label": "Growth %",
+                        "format": "number"
+                    },
+                    "started_at": {
+                        "label": "Started At",
+                        "format": "number"
+                    },
+                    "status": {
+                        "label": "Status",
+                        "format": "text"
+                    },
+                    "trend_url": {
+                        "label": "Trend URL",
+                        "format": "link"
+                    }
+                }
+            }
+        },
+        "full_response": {
+            "title": "Full Response",
+            "transformation": {
+                "fields": ["search_parameters", "trends"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "search_parameters": {
+                        "label": "Search Parameters",
+                        "format": "object"
+                    },
+                    "trends": {
+                        "label": "Trends",
+                        "format": "object"
+                    }
+                }
+            }
+        }
+    }
+}
