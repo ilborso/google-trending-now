@@ -7,18 +7,76 @@
             "title": "Country Code",
             "sectionCaption": "Trend Filters",
             "type": "string",
-            "description": "Two-letter country code for geographic filtering (e.g. US, IT, GB, DE).",
-            "editor": "textfield",
+            "description": "Country for geographic filtering.",
+            "editor": "select",
             "default": "US",
-            "prefill": "US"
+            "prefill": "US",
+            "enum": [
+                "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AQ", "AR", "AS", "AT", "AU", "AW", "AX", "AZ",
+                "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM", "BN", "BO", "BQ", "BR", "BS",
+                "BT", "BV", "BW", "BY", "BZ", "CA", "CC", "CD", "CF", "CG", "CH", "CI", "CK", "CL", "CM", "CN",
+                "CO", "CR", "CU", "CV", "CW", "CX", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE",
+                "EG", "EH", "ER", "ES", "ET", "FI", "FJ", "FK", "FM", "FO", "FR", "GA", "GB", "GD", "GE", "GF",
+                "GG", "GH", "GI", "GL", "GM", "GN", "GP", "GQ", "GR", "GS", "GT", "GU", "GW", "GY", "HK", "HM",
+                "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IM", "IN", "IO", "IQ", "IR", "IS", "IT", "JE", "JM",
+                "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KP", "KR", "KW", "KY", "KZ", "LA", "LB", "LC",
+                "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MF", "MG", "MH", "MK",
+                "ML", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA",
+                "NC", "NE", "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ", "OM", "PA", "PE", "PF", "PG",
+                "PH", "PK", "PL", "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE", "RO", "RS", "RU", "RW",
+                "SA", "SB", "SC", "SD", "SE", "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO", "SR", "SS",
+                "ST", "SV", "SX", "SY", "SZ", "TC", "TD", "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO",
+                "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI",
+                "VN", "VU", "WF", "WS", "YE", "YT", "ZA", "ZM", "ZW"
+            ],
+            "enumTitles": [
+                "Andorra (AD)", "United Arab Emirates (AE)", "Afghanistan (AF)", "Antigua and Barbuda (AG)", "Anguilla (AI)", "Albania (AL)", "Armenia (AM)", "Angola (AO)", "Antarctica (AQ)", "Argentina (AR)", "American Samoa (AS)", "Austria (AT)", "Australia (AU)", "Aruba (AW)", "Åland Islands (AX)", "Azerbaijan (AZ)",
+                "Bosnia and Herzegovina (BA)", "Barbados (BB)", "Bangladesh (BD)", "Belgium (BE)", "Burkina Faso (BF)", "Bulgaria (BG)", "Bahrain (BH)", "Burundi (BI)", "Benin (BJ)", "Saint Barthélemy (BL)", "Bermuda (BM)", "Brunei Darussalam (BN)", "Bolivia (BO)", "Bonaire, Sint Eustatius and Saba (BQ)", "Brazil (BR)", "Bahamas (BS)",
+                "Bhutan (BT)", "Bouvet Island (BV)", "Botswana (BW)", "Belarus (BY)", "Belize (BZ)", "Canada (CA)", "Cocos (Keeling) Islands (CC)", "Democratic Republic of the Congo (CD)", "Central African Republic (CF)", "Republic of the Congo (CG)", "Switzerland (CH)", "Côte d'Ivoire (CI)", "Cook Islands (CK)", "Chile (CL)", "Cameroon (CM)", "China (CN)",
+                "Colombia (CO)", "Costa Rica (CR)", "Cuba (CU)", "Cabo Verde (CV)", "Curaçao (CW)", "Christmas Island (CX)", "Cyprus (CY)", "Czechia (CZ)", "Germany (DE)", "Djibouti (DJ)", "Denmark (DK)", "Dominica (DM)", "Dominican Republic (DO)", "Algeria (DZ)", "Ecuador (EC)", "Estonia (EE)",
+                "Egypt (EG)", "Western Sahara (EH)", "Eritrea (ER)", "Spain (ES)", "Ethiopia (ET)", "Finland (FI)", "Fiji (FJ)", "Falkland Islands (FK)", "Micronesia (FM)", "Faroe Islands (FO)", "France (FR)", "Gabon (GA)", "United Kingdom (GB)", "Grenada (GD)", "Georgia (GE)", "French Guiana (GF)",
+                "Guernsey (GG)", "Ghana (GH)", "Gibraltar (GI)", "Greenland (GL)", "Gambia (GM)", "Guinea (GN)", "Guadeloupe (GP)", "Equatorial Guinea (GQ)", "Greece (GR)", "South Georgia and the South Sandwich Islands (GS)", "Guatemala (GT)", "Guam (GU)", "Guinea-Bissau (GW)", "Guyana (GY)", "Hong Kong (HK)", "Heard Island and McDonald Islands (HM)",
+                "Honduras (HN)", "Croatia (HR)", "Haiti (HT)", "Hungary (HU)", "Indonesia (ID)", "Ireland (IE)", "Israel (IL)", "Isle of Man (IM)", "India (IN)", "British Indian Ocean Territory (IO)", "Iraq (IQ)", "Iran (IR)", "Iceland (IS)", "Italy (IT)", "Jersey (JE)", "Jamaica (JM)",
+                "Jordan (JO)", "Japan (JP)", "Kenya (KE)", "Kyrgyzstan (KG)", "Cambodia (KH)", "Kiribati (KI)", "Comoros (KM)", "Saint Kitts and Nevis (KN)", "North Korea (KP)", "South Korea (KR)", "Kuwait (KW)", "Cayman Islands (KY)", "Kazakhstan (KZ)", "Laos (LA)", "Lebanon (LB)", "Saint Lucia (LC)",
+                "Liechtenstein (LI)", "Sri Lanka (LK)", "Liberia (LR)", "Lesotho (LS)", "Lithuania (LT)", "Luxembourg (LU)", "Latvia (LV)", "Libya (LY)", "Morocco (MA)", "Monaco (MC)", "Moldova (MD)", "Montenegro (ME)", "Saint Martin (MF)", "Madagascar (MG)", "Marshall Islands (MH)", "North Macedonia (MK)",
+                "Mali (ML)", "Myanmar (MM)", "Mongolia (MN)", "Macao (MO)", "Northern Mariana Islands (MP)", "Martinique (MQ)", "Mauritania (MR)", "Montserrat (MS)", "Malta (MT)", "Mauritius (MU)", "Maldives (MV)", "Malawi (MW)", "Mexico (MX)", "Malaysia (MY)", "Mozambique (MZ)", "Namibia (NA)",
+                "New Caledonia (NC)", "Niger (NE)", "Norfolk Island (NF)", "Nigeria (NG)", "Nicaragua (NI)", "Netherlands (NL)", "Norway (NO)", "Nepal (NP)", "Nauru (NR)", "Niue (NU)", "New Zealand (NZ)", "Oman (OM)", "Panama (PA)", "Peru (PE)", "French Polynesia (PF)", "Papua New Guinea (PG)",
+                "Philippines (PH)", "Pakistan (PK)", "Poland (PL)", "Saint Pierre and Miquelon (PM)", "Pitcairn (PN)", "Puerto Rico (PR)", "Palestine (PS)", "Portugal (PT)", "Palau (PW)", "Paraguay (PY)", "Qatar (QA)", "Réunion (RE)", "Romania (RO)", "Serbia (RS)", "Russia (RU)", "Rwanda (RW)",
+                "Saudi Arabia (SA)", "Solomon Islands (SB)", "Seychelles (SC)", "Sudan (SD)", "Sweden (SE)", "Singapore (SG)", "Saint Helena, Ascension and Tristan da Cunha (SH)", "Slovenia (SI)", "Svalbard and Jan Mayen (SJ)", "Slovakia (SK)", "Sierra Leone (SL)", "San Marino (SM)", "Senegal (SN)", "Somalia (SO)", "Suriname (SR)", "South Sudan (SS)",
+                "Sao Tome and Principe (ST)", "El Salvador (SV)", "Sint Maarten (SX)", "Syria (SY)", "Eswatini (SZ)", "Turks and Caicos Islands (TC)", "Chad (TD)", "French Southern Territories (TF)", "Togo (TG)", "Thailand (TH)", "Tajikistan (TJ)", "Tokelau (TK)", "Timor-Leste (TL)", "Turkmenistan (TM)", "Tunisia (TN)", "Tonga (TO)",
+                "Türkiye (TR)", "Trinidad and Tobago (TT)", "Tuvalu (TV)", "Taiwan (TW)", "Tanzania (TZ)", "Ukraine (UA)", "Uganda (UG)", "United States Minor Outlying Islands (UM)", "United States (US)", "Uruguay (UY)", "Uzbekistan (UZ)", "Holy See (VA)", "Saint Vincent and the Grenadines (VC)", "Venezuela (VE)", "Virgin Islands (British) (VG)", "Virgin Islands (U.S.) (VI)",
+                "Viet Nam (VN)", "Vanuatu (VU)", "Wallis and Futuna (WF)", "Samoa (WS)", "Yemen (YE)", "Mayotte (YT)", "South Africa (ZA)", "Zambia (ZM)", "Zimbabwe (ZW)"
+            ]
         },
         "hl": {
             "title": "Language Code",
             "type": "string",
-            "description": "Language code for the response (e.g. en, it, es, de).",
-            "editor": "textfield",
+            "description": "Language code for the response.",
+            "editor": "select",
             "default": "en",
-            "prefill": "en"
+            "prefill": "en",
+            "enum": [
+                "aa", "ab", "af", "am", "ar", "as", "ay", "az", "ba", "be", "bg", "bh", "bi", "bn", "bo", "br",
+                "ca", "co", "cs", "cy", "da", "de", "dz", "el", "en", "eo", "es", "et", "eu", "fa", "fi", "fj",
+                "fo", "fr", "fy", "ga", "gd", "gl", "gn", "gu", "ha", "he", "hi", "hr", "hu", "hy", "ia", "id",
+                "ie", "ik", "is", "it", "iu", "ja", "jw", "ka", "kk", "kl", "km", "kn", "ko", "ks", "ku", "ky",
+                "la", "ln", "lo", "lt", "lv", "mg", "mi", "mk", "ml", "mn", "mo", "mr", "ms", "mt", "my", "na",
+                "ne", "nl", "no", "oc", "om", "or", "pa", "pl", "ps", "pt", "qu", "rm", "rn", "ro", "ru", "rw",
+                "sa", "sd", "sg", "sh", "si", "sk", "sl", "sm", "sn", "so", "sq", "sr", "ss", "st", "su", "sv",
+                "sw", "ta", "te", "tg", "th", "ti", "tk", "tl", "tn", "to", "tr", "ts", "tt", "tw", "ug", "uk",
+                "ur", "uz", "vi", "vo", "wo", "xh", "yi", "yo", "za", "zh", "zu"
+            ],
+            "enumTitles": [
+                "Afar (aa)", "Abkhazian (ab)", "Afrikaans (af)", "Amharic (am)", "Arabic (ar)", "Assamese (as)", "Aymara (ay)", "Azerbaijani (az)", "Bashkir (ba)", "Belarusian (be)", "Bulgarian (bg)", "Bihari (bh)", "Bislama (bi)", "Bengali (bn)", "Tibetan (bo)", "Breton (br)",
+                "Catalan (ca)", "Corsican (co)", "Czech (cs)", "Welsh (cy)", "Danish (da)", "German (de)", "Bhutani (dz)", "Greek (el)", "English (en)", "Esperanto (eo)", "Spanish (es)", "Estonian (et)", "Basque (eu)", "Persian (fa)", "Finnish (fi)", "Fiji (fj)",
+                "Faroese (fo)", "French (fr)", "Frisian (fy)", "Irish (ga)", "Scots Gaelic (gd)", "Galician (gl)", "Guarani (gn)", "Gujarati (gu)", "Hausa (ha)", "Hebrew (he)", "Hindi (hi)", "Croatian (hr)", "Hungarian (hu)", "Armenian (hy)", "Interlingua (ia)", "Indonesian (id)",
+                "Interlingue (ie)", "Inupiak (ik)", "Icelandic (is)", "Italian (it)", "Inuktitut (iu)", "Japanese (ja)", "Javanese (jw)", "Georgian (ka)", "Kazakh (kk)", "Greenlandic (kl)", "Cambodian (km)", "Kannada (kn)", "Korean (ko)", "Kashmiri (ks)", "Kurdish (ku)", "Kirghiz (ky)",
+                "Latin (la)", "Lingala (ln)", "Laothian (lo)", "Lithuanian (lt)", "Latvian (lv)", "Malagasy (mg)", "Maori (mi)", "Macedonian (mk)", "Malayalam (ml)", "Mongolian (mn)", "Moldavian (mo)", "Marathi (mr)", "Malay (ms)", "Maltese (mt)", "Burmese (my)", "Nauru (na)",
+                "Nepali (ne)", "Dutch (nl)", "Norwegian (no)", "Occitan (oc)", "Oromo (om)", "Oriya (or)", "Punjabi (pa)", "Polish (pl)", "Pashto (ps)", "Portuguese (pt)", "Quechua (qu)", "Rhaeto-Romance (rm)", "Kirundi (rn)", "Romanian (ro)", "Russian (ru)", "Kinyarwanda (rw)",
+                "Sanskrit (sa)", "Sindhi (sd)", "Sangro (sg)", "Serbo-Croatian (sh)", "Singhalese (si)", "Slovak (sk)", "Slovenian (sl)", "Samoan (sm)", "Shona (sn)", "Somali (so)", "Albanian (sq)", "Serbian (sr)", "Siswati (ss)", "Sesotho (st)", "Sundanese (su)", "Swedish (sv)",
+                "Swahili (sw)", "Tamil (ta)", "Telugu (te)", "Tajik (tg)", "Thai (th)", "Tigrinya (ti)", "Turkmen (tk)", "Tagalog (tl)", "Setswana (tn)", "Tonga (to)", "Turkish (tr)", "Tsonga (ts)", "Tatar (tt)", "Twi (tw)", "Uighur (ug)", "Ukrainian (uk)",
+                "Urdu (ur)", "Uzbek (uz)", "Vietnamese (vi)", "Volapuk (vo)", "Wolof (wo)", "Xhosa (xh)", "Yiddish (yi)", "Yoruba (yo)", "Zhuang (za)", "Chinese (zh)", "Zulu (zu)"
+            ]
         },
         "hours": {
             "title": "Time Window (hours)",
@@ -129,5 +187,7 @@
             ]
         }
     },
-    "required": ["geo"]
+    "required": [
+        "geo"
+    ]
 }
