@@ -185,6 +185,15 @@
                 "All trends",
                 "Active only"
             ]
+        },
+        "max_items": {
+            "title": "Maximum Items",
+            "sectionCaption": "Limit Options",
+            "type": "integer",
+            "description": "Maximum number of trending results to return.",
+            "editor": "number",
+            "default": 2000,
+            "minimum": 1
         }
     },
     "required": [

@@ -67,9 +67,19 @@ async def main() -> None:
         sort: str = input_data.get("sort", "relevance") or "relevance"
         status: str = input_data.get("status", "all") or "all"
 
+        raw_max_items = input_data.get("max_items")
+        max_items: int = 2000
+        if raw_max_items is not None:
+            try:
+                max_items = int(raw_max_items)
+            except (ValueError, TypeError):
+                max_items = 2000
+        if max_items <= 0:
+            max_items = 2000
+
         Actor.log.info(
             f"Configuration — geo={geo}, hl={hl}, hours={hours}, "
-            f"cat={cat}, sort={sort}, status={status}"
+            f"cat={cat}, sort={sort}, status={status}, max_items={max_items}"
         )
 
         # ── 2. Build query parameters ──────────────────────────────
@@ -128,6 +138,10 @@ async def main() -> None:
         search_parameters = data.get("search_parameters", {})
 
         Actor.log.info(f"Received {len(trends)} trends from the API")
+
+        if len(trends) > max_items:
+            Actor.log.info(f"Limiting trends to max_items={max_items} (from {len(trends)})")
+            trends = trends[:max_items]
 
         # ── 5. Push to Dataset ──────────────────────────────────────
         Actor.log.info("Pushing each trend as an individual record to Dataset")

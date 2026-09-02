@@ -30,6 +30,7 @@ Perfect for trend monitoring, content strategy, SEO research, market analysis, a
 | `cat` | integer | No | `0` | Category ID filter (see table below) |
 | `sort` | string | No | `"relevance"` | Sort order: `relevance`, `search_volume`, `recency`, `title` |
 | `status` | string | No | `"all"` | Trend status filter: `all`, `active` |
+| `max_items` | integer | No | `2000` | Maximum number of trending items to return |
 
 ### Category IDs
 
