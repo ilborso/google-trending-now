@@ -22,12 +22,17 @@
         },
         "hours": {
             "title": "Time Window (hours)",
-            "type": "integer",
+            "type": "number",
             "description": "How far back to look for trending searches.",
             "editor": "select",
             "default": 24,
             "prefill": 24,
-            "enum": [4, 24, 48, 168],
+            "enum": [
+                4,
+                24,
+                48,
+                168
+            ],
             "enumTitles": [
                 "Last 4 hours",
                 "Last 24 hours",
@@ -37,12 +42,33 @@
         },
         "cat": {
             "title": "Category",
-            "type": "integer",
+            "type": "number",
             "description": "Category ID to filter trends. Use 0 for all categories.",
             "editor": "select",
             "default": 0,
             "prefill": 0,
-            "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20],
+            "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20
+            ],
             "enumTitles": [
                 "All categories",
                 "Autos and Vehicles",
@@ -73,7 +99,12 @@
             "editor": "select",
             "default": "relevance",
             "prefill": "relevance",
-            "enum": ["relevance", "search_volume", "recency", "title"],
+            "enum": [
+                "relevance",
+                "search_volume",
+                "recency",
+                "title"
+            ],
             "enumTitles": [
                 "Relevance",
                 "Search Volume",
@@ -88,7 +119,10 @@
             "editor": "select",
             "default": "all",
             "prefill": "all",
-            "enum": ["all", "active"],
+            "enum": [
+                "all",
+                "active"
+            ],
             "enumTitles": [
                 "All trends",
                 "Active only"
