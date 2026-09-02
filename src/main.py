@@ -17,6 +17,30 @@ API_URL = "https://api.scrape.do/plugin/google/trending"
 # Request configuration
 REQUEST_TIMEOUT = 30
 
+# Category ID to description mapping
+CATEGORY_MAP: Dict[int, str] = {
+    0: "All categories",
+    1: "Autos and Vehicles",
+    2: "Beauty and Fashion",
+    3: "Business and Finance",
+    4: "Entertainment",
+    5: "Food and Drink",
+    6: "Games",
+    7: "Health",
+    8: "Hobbies and Leisure",
+    9: "Jobs and Education",
+    10: "Law and Government",
+    11: "Other",
+    13: "Pets and Animals",
+    14: "Politics",
+    15: "Science",
+    16: "Shopping",
+    17: "Sports",
+    18: "Technology",
+    19: "Travel and Transportation",
+    20: "Climate",
+}
+
 
 async def main() -> None:
     """Main entry point of the Actor."""
@@ -109,6 +133,11 @@ async def main() -> None:
         Actor.log.info("Pushing each trend as an individual record to Dataset")
         for trend in trends:
             trend["search_parameters"] = search_parameters
+            # Resolve category IDs to human-readable descriptions
+            cat_ids = trend.get("category_ids", [])
+            trend["category_description"] = [
+                CATEGORY_MAP.get(cid, f"Unknown ({cid})") for cid in cat_ids
+            ]
         await Actor.push_data(trends)
         Actor.log.info(f"Pushed {len(trends)} trend records to Dataset")
 

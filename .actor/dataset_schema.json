@@ -5,7 +5,7 @@
         "trends_overview": {
             "title": "Trends Overview",
             "transformation": {
-                "fields": ["title", "search_volume", "growth_percentage", "started_at", "status", "trend_url"]
+                "fields": ["title", "search_volume", "growth_percentage", "started_at", "status", "category_description", "trend_url"]
             },
             "display": {
                 "component": "table",
@@ -29,6 +29,10 @@
                     "status": {
                         "label": "Status",
                         "format": "text"
+                    },
+                    "category_description": {
+                        "label": "Categories",
+                        "format": "object"
                     },
                     "trend_url": {
                         "label": "Trend URL",

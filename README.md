@@ -468,6 +468,7 @@ Each trend is pushed as an individual record to the Apify Dataset, with `search_
   "status": "active",
   "related_queries": ["query 1", "query 2"],
   "category_ids": [17],
+  "category_description": ["Sports"],
   "trend_url": "https://trends.google.com/...",
   "search_parameters": {
     "geo": "US",
@@ -499,13 +500,7 @@ The Actor fails gracefully with descriptive messages for:
 
 | Scenario | Behavior |
 |----------|----------|
-| Missing `SCRAPEDO_TOKEN` env var | `Actor.fail()` with clear instructions |
 | HTTP 4xx/5xx errors | `Actor.fail()` with status code and response preview |
 | Network timeout | `Actor.fail()` with timeout duration |
 | Invalid JSON response | `Actor.fail()` with parse error details |
 
-## Technology
-
-- **Runtime**: Python 3.14 on Apify Docker image
-- **HTTP Client**: `httpx` (async)
-- **SDK**: `apify` Python SDK
