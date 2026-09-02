@@ -30,7 +30,6 @@ Perfect for trend monitoring, content strategy, SEO research, market analysis, a
 | `cat` | integer | No | `0` | Category ID filter (see table below) |
 | `sort` | string | No | `"relevance"` | Sort order: `relevance`, `search_volume`, `recency`, `title` |
 | `status` | string | No | `"all"` | Trend status filter: `all`, `active` |
-| `flattenTrends` | boolean | No | `false` | If `true`, pushes each trend as an individual Dataset record |
 
 ### Category IDs
 
