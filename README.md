@@ -32,6 +32,17 @@ Perfect for trend monitoring, content strategy, SEO research, market analysis, a
 | `status` | string | No | `"all"` | Trend status filter: `all`, `active` |
 | `max_items` | integer | No | `2000` | Maximum number of trending items to return |
 
+See some example: 
+
+| Description | `cat` | `geo` | `hl` | `hours` | `sort` | `status` | JSON Input |
+| :--- | :---: | :---: | :---: | :---: | :--- | :--- | :--- |
+| All trending topics in the US, last 24 hours | `0` | `US` | `en` | `24` | `relevance` | `all` | `{"cat": "0", "geo": "US", "hl": "en", "hours": "24", "sort": "relevance", "status": "all"}` |
+| Sports trends in the UK, last 48 hours, order by search volume | `17` | `GB` | `en` | `48` | `search_volume` | `all` | `{"cat": "17", "geo": "GB", "hl": "en", "hours": "48", "sort": "search_volume", "status": "all"}` |
+| Active entertainment trends sorted by search volume, status active | `4` | `US` | `en` | `48` | `relevance` | `active` | `{"cat": "4", "geo": "US", "hl": "en", "hours": "48", "sort": "relevance", "status": "active"}` |
+| Trending in Germany, last 7 days, in German, order by search volume, status active | `0` | `DE` | `en` | `168` | `search_volume` | `active` | `{"cat": "0", "geo": "DE", "hl": "en", "hours": "168", "sort": "search_volume", "status": "active"}` |
+| Technology trends, most recent first | `0` | `DE` | `en` | `168` | `recency` | `active` | `{"cat": "0", "geo": "DE", "hl": "en", "hours": "168", "sort": "recency", "status": "active"}` |
+
+
 ### Category IDs
 
 | ID | Category |
