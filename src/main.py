@@ -38,8 +38,8 @@ async def main() -> None:
 
         geo: str = input_data.get("geo", "US") or "US"
         hl: str = input_data.get("hl", "en") or "en"
-        hours: int = input_data.get("hours", 24) or 24
-        cat: int = input_data.get("cat", 0) if input_data.get("cat") is not None else 0
+        hours: int = int(input_data.get("hours", "24") or "24")
+        cat: int = int(input_data.get("cat", "0") or "0")
         sort: str = input_data.get("sort", "relevance") or "relevance"
         status: str = input_data.get("status", "all") or "all"
 
