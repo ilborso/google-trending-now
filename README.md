@@ -24,7 +24,7 @@ Perfect for trend monitoring, content strategy, SEO research, market analysis, a
 
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
-| `geo` | string | No | `"US"` | Two-letter country code (see table below) |
+| `geo` | string | Yes | `"US"` | Two-letter country code (see table below) |
 | `hl` | string | No | `"en"` | Language code (e.g. `en`, `it`, `es`, `de`) |
 | `hours` | integer | No | `24` | Time window. Options: `4`, `24`, `48`, `168` |
 | `cat` | integer | No | `0` | Category ID filter (see table below) |
