@@ -1,6 +1,64 @@
 {
     "actorSpecification": 1,
-    "fields": {},
+    "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "search_parameters": {
+                "type": "object",
+                "description": "Echoes the request parameters used, including defaults applied."
+            },
+            "title": {
+                "type": "string",
+                "description": "The trending search topic"
+            },
+            "search_volume": {
+                "type": "integer",
+                "description": "Approximate search volume"
+            },
+            "growth_percentage": {
+                "type": "integer",
+                "description": "Percentage growth in search interest"
+            },
+            "started_at": {
+                "type": "integer",
+                "description": "Unix timestamp when the trend started"
+            },
+            "ended_at": {
+                "type": "integer",
+                "description": "Unix timestamp when the trend ended. Omitted if still active"
+            },
+            "status": {
+                "type": "string",
+                "description": "active or ended"
+            },
+            "related_queries": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "description": "Related search queries. May be empty"
+            },
+            "category_ids": {
+                "type": "array",
+                "items": {
+                    "type": "integer"
+                },
+                "description": "Category IDs this trend belongs to. May be empty"
+            },
+            "category_description": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "description": "Human-readable category descriptions"
+            },
+            "trend_url": {
+                "type": "string",
+                "description": "Link to explore this trend on Google Trends"
+            }
+        }
+    },
     "views": {
         "trends_overview": {
             "title": "Trends Overview",
