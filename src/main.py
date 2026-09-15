@@ -94,7 +94,7 @@ async def main() -> None:
         }
 
         # ── 3. Make the API request ─────────────────────────────────
-        Actor.log.info(f"Requesting {API_URL} ...")
+        Actor.log.info(f"Elaborating on Google Trending ...")
 
         try:
             async with httpx.AsyncClient() as client:
