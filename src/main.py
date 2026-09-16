@@ -45,21 +45,21 @@ CATEGORY_MAP: Dict[int, str] = {
 }
 
 DEFAULT_SYSTEM_INSTRUCTION = """
-Sei un Senior Marketing Intelligence Analyst. Il tuo compito è analizzare una lista di ricerche di tendenza estratte da Google Trends e generare insight operativi rapidi per i team di marketing, content creation e paid media.
+You are a Senior Marketing Intelligence Analyst. Your task is to analyze a list of trending searches extracted from Google Trends and generate quick operational insights for marketing, content creation, and paid media teams.
 
-Devi analizzare ciascun trend e restituire ESCLUSIVAMENTE un array JSON di oggetti. Non aggiungere testo introduttivo, spiegazioni o blocchi discorsivi.
+You must analyze each trend and return EXCLUSIVELY a JSON array of objects. Do not add introductory text, explanations, or discursive blocks.
 
-Per ogni elemento analizzato, genera l'oggetto con questa struttura:
-- "title": (stringa, esattamente uguale al title di input)
+For each analyzed item, generate the object with this structure:
+- "title": (string, exactly equal to the input title)
 - "ai_marketing_intelligence": {
-    "why_it_matters": (stringa sintetica: max 15 parole sul contesto o evento scatenante più probabile),
-    "affected_sectors": (array di 2-3 stringhe con i settori merceologici o verticali rilevanti, es: "E-commerce", "Food", "Sport Media"),
-    "marketing_angle": (stringa: 1 idea tattica di newsjacking, piano editoriale o content creation),
-    "paid_ads_advice": (stringa: raccomandazione per Google Ads/Meta Ads, es. "Aggiungere come parola chiave negativa", "Aumentare bid su query correlate", o "Nessuna azione"),
-    "brand_safety_risk": (stringa tra: "Low", "Medium", "High")
+    "why_it_matters": (concise string: max 15 words on the context or most likely trigger event),
+    "affected_sectors": (array of 2-3 strings with relevant product sectors or verticals, e.g.: "E-commerce", "Food", "Sport Media"),
+    "marketing_angle": (string: 1 tactical idea for newsjacking, editorial plan, or content creation),
+    "paid_ads_advice": (string: recommendation for Google Ads/Meta Ads, e.g.: "Add as negative keyword", "Increase bid on related queries", or "No action"),
+    "brand_safety_risk": (string among: "Low", "Medium", "High")
   }
 
-Mantieni i testi concisi, asciutti e orientati all'azione. Rispondi solo in lingua italiana.
+Keep texts concise, dry, and action-oriented. Respond in the same language as the input.
 """
 
 
@@ -75,7 +75,7 @@ def enrich_trends_with_ai(
 
     client = genai.Client(api_key=api_key)
 
-    # Per minimizzare i token inviati all'LLM, estraiamo solo le chiavi essenziali
+    # To minimize tokens sent to the LLM, we extract only essential keys
     lean_input = [
         {
             "title": item.get("title"),
@@ -85,7 +85,7 @@ def enrich_trends_with_ai(
         for item in trends_data
     ]
 
-    user_prompt = f"Analizza il seguente array di trend e restituisci l'array JSON arricchito:\n{json.dumps(lean_input, ensure_ascii=False)}"
+    user_prompt = f"Analyze the following array of trends and return the enriched JSON array:\n{json.dumps(lean_input, ensure_ascii=False)}"
 
     response = client.models.generate_content(
         model=model,
