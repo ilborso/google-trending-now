@@ -1,0 +1,85 @@
+Aggiungi il parametro booleano in input "AI_Marketing_Intelligence". Se AI_Marketing_Intelligence=true implementa la segunete logica: 
+
+1) Aggiungi le variabili di ambiente Seguenti: "GEMINI_API_KEY" e "AI_MARKETING_PROMPT" e "MODEL" e "AI_MARKETING_TEMPERATURE" (default 0.2)
+2) Usa le api native di gemini per elaborare un prompt salvato come variabile di ambiente apify "AI_MARKETING_PROMPT"
+3) Usa il codice di esempio sotto per valorizzare response_mime_type="application/json" e temperature=<AI_MARKETING_TEMPERATURE> per evitare allucinazioni.
+4) Per ogni elemento analizzato, aggiungi per ogni oggetto di output la seguente struttura:
+"ai_marketing_intelligence": {
+    "why_it_matters": (stringa sintetica: max 15 parole sul contesto o evento scatenante più probabile),
+    "affected_sectors": (array di 2-3 stringhe con i settori merceologici o verticali rilevanti, es: "E-commerce", "Food", "Sport Media"),
+    "marketing_angle": (stringa: 1 idea tattica di newsjacking, piano editoriale o content creation),
+    "paid_ads_advice": (stringa: raccomandazione per Google Ads/Meta Ads, es. "Aggiungere come parola chiave negativa", "Aumentare bid su query correlate", o "Nessuna azione"),
+    "brand_safety_risk": (stringa tra: "Low", "Medium", "High")
+  }
+
+Esempio codice:
+
+import json
+import os
+from google import genai
+from google.genai import types
+
+# Inizializza il client (legge automaticamente GEMINI_API_KEY dall'ambiente)
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+
+SYSTEM_INSTRUCTION = """
+Sei un Senior Marketing Intelligence Analyst. Il tuo compito è analizzare una lista di ricerche di tendenza estratte da Google Trends e generare insight operativi rapidi per i team di marketing, content creation e paid media.
+
+Devi analizzare ciascun trend e restituire ESCLUSIVAMENTE un array JSON di oggetti. Non aggiungere testo introduttivo, spiegazioni o blocchi discorsivi.
+
+Per ogni elemento analizzato, genera l'oggetto con questa struttura:
+- "title": (stringa, esattamente uguale al title di input)
+- "ai_marketing_intelligence": {
+    "why_it_matters": (stringa sintetica: max 15 parole sul contesto o evento scatenante più probabile),
+    "affected_sectors": (array di 2-3 stringhe con i settori merceologici o verticali rilevanti, es: "E-commerce", "Food", "Sport Media"),
+    "marketing_angle": (stringa: 1 idea tattica di newsjacking, piano editoriale o content creation),
+    "paid_ads_advice": (stringa: raccomandazione per Google Ads/Meta Ads, es. "Aggiungere come parola chiave negativa", "Aumentare bid su query correlate", o "Nessuna azione"),
+    "brand_safety_risk": (stringa tra: "Low", "Medium", "High")
+  }
+
+Mantieni i testi concisi, asciutti e orientati all'azione. Rispondi solo in lingua italiana.
+"""
+
+
+def enrich_trends_with_ai(trends_data: list[dict]) -> list[dict]:
+    # Per minimizzare i token inviati all'LLM, estraiamo solo le chiavi essenziali
+    lean_input = [
+        {
+            "title": item.get("title"),
+            "category_description": item.get("category_description"),
+            "growth_percentage": item.get("growth_percentage"),
+        }
+        for item in trends_data
+    ]
+
+    user_prompt = f"Analizza il seguente array di trend e restituisci l'array JSON arricchito:\n{json.dumps(lean_input, ensure_ascii=False)}"
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents=user_prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_INSTRUCTION,
+            response_mime_type="application/json",
+            temperature=0.2,
+        ),
+    )
+
+    # Parsing dell'output generato
+    ai_output = json.loads(response.text)
+
+    # Mappa per lookup O(1) sul campo title
+    ai_map = {
+        item["title"].strip().lower(): item.get("ai_marketing_intelligence")
+        for item in ai_output
+        if "title" in item
+    }
+
+    # Merge dei dati nel dataset originale dell'Actor
+    enriched_dataset = []
+    for trend in trends_data:
+        lookup_key = trend.get("title", "").strip().lower()
+        trend_copy = dict(trend)
+        trend_copy["ai_marketing_intelligence"] = ai_map.get(lookup_key)
+        enriched_dataset.append(trend_copy)
+
+    return enriched_dataset
