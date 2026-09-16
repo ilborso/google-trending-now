@@ -31,6 +31,18 @@ Perfect for trend monitoring, content strategy, SEO research, market analysis, a
 | `sort` | string | No | `"relevance"` | Sort order: `relevance`, `search_volume`, `recency`, `title` |
 | `status` | string | No | `"all"` | Trend status filter: `all`, `active` |
 | `max_items` | integer | No | `2000` | Maximum number of trending items to return |
+| `AI_Marketing_Intelligence` | boolean | No | `false` | Enable AI-generated marketing intelligence insights via Google Gemini |
+
+### Environment Variables
+
+When `AI_Marketing_Intelligence` is set to `true`, the following environment variables are supported:
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `GEMINI_API_KEY` | Yes (when AI enabled) | N/A | Google Gemini API Key |
+| `AI_MARKETING_PROMPT` | No | Default System Prompt | System instructions for Marketing Intelligence Analyst |
+| `MODEL` | No | `"gemini-2.5-flash-lite"` | Gemini model name |
+| `AI_MARKETING_TEMPERATURE` | No | `0.2` | Temperature parameter for content generation |
 
 See some example: 
 

@@ -5,11 +5,14 @@ and pushes the results into an Apify Dataset.
 """
 
 import asyncio
+import json
 import os
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import httpx
 from apify import Actor
+from google import genai
+from google.genai import types
 
 # Scrape.do Google Trends endpoint
 API_URL = "https://api.scrape.do/plugin/google/trending"
@@ -41,6 +44,84 @@ CATEGORY_MAP: Dict[int, str] = {
     20: "Climate",
 }
 
+DEFAULT_SYSTEM_INSTRUCTION = """
+Sei un Senior Marketing Intelligence Analyst. Il tuo compito è analizzare una lista di ricerche di tendenza estratte da Google Trends e generare insight operativi rapidi per i team di marketing, content creation e paid media.
+
+Devi analizzare ciascun trend e restituire ESCLUSIVAMENTE un array JSON di oggetti. Non aggiungere testo introduttivo, spiegazioni o blocchi discorsivi.
+
+Per ogni elemento analizzato, genera l'oggetto con questa struttura:
+- "title": (stringa, esattamente uguale al title di input)
+- "ai_marketing_intelligence": {
+    "why_it_matters": (stringa sintetica: max 15 parole sul contesto o evento scatenante più probabile),
+    "affected_sectors": (array di 2-3 stringhe con i settori merceologici o verticali rilevanti, es: "E-commerce", "Food", "Sport Media"),
+    "marketing_angle": (stringa: 1 idea tattica di newsjacking, piano editoriale o content creation),
+    "paid_ads_advice": (stringa: raccomandazione per Google Ads/Meta Ads, es. "Aggiungere come parola chiave negativa", "Aumentare bid su query correlate", o "Nessuna azione"),
+    "brand_safety_risk": (stringa tra: "Low", "Medium", "High")
+  }
+
+Mantieni i testi concisi, asciutti e orientati all'azione. Rispondi solo in lingua italiana.
+"""
+
+
+def enrich_trends_with_ai(
+    trends_data: List[Dict[str, Any]],
+    api_key: str,
+    system_instruction: str,
+    model: str,
+    temperature: float,
+) -> List[Dict[str, Any]]:
+    if not trends_data:
+        return []
+
+    client = genai.Client(api_key=api_key)
+
+    # Per minimizzare i token inviati all'LLM, estraiamo solo le chiavi essenziali
+    lean_input = [
+        {
+            "title": item.get("title"),
+            "category_description": item.get("category_description"),
+            "growth_percentage": item.get("growth_percentage"),
+        }
+        for item in trends_data
+    ]
+
+    user_prompt = f"Analizza il seguente array di trend e restituisci l'array JSON arricchito:\n{json.dumps(lean_input, ensure_ascii=False)}"
+
+    response = client.models.generate_content(
+        model=model,
+        contents=user_prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=system_instruction,
+            response_mime_type="application/json",
+            temperature=temperature,
+        ),
+    )
+
+    # Parsing dell'output generato
+    raw_text = response.text.strip() if response.text else "[]"
+    try:
+        ai_output = json.loads(raw_text)
+    except Exception as exc:
+        Actor.log.warning(f"Failed to parse JSON output from Gemini: {exc}")
+        ai_output = []
+
+    # Mappa per lookup O(1) sul campo title
+    ai_map = {}
+    if isinstance(ai_output, list):
+        for item in ai_output:
+            if isinstance(item, dict) and "title" in item and item["title"]:
+                ai_map[str(item["title"]).strip().lower()] = item.get("ai_marketing_intelligence")
+
+    # Merge dei dati nel dataset originale dell'Actor
+    enriched_dataset = []
+    for trend in trends_data:
+        lookup_key = str(trend.get("title", "")).strip().lower()
+        trend_copy = dict(trend)
+        trend_copy["ai_marketing_intelligence"] = ai_map.get(lookup_key)
+        enriched_dataset.append(trend_copy)
+
+    return enriched_dataset
+
 
 async def main() -> None:
     """Main entry point of the Actor."""
@@ -59,6 +140,15 @@ async def main() -> None:
                 "Please set it in the Actor's Environment Variables settings."
             )
             return  # unreachable, but keeps the type checker happy
+
+        ai_marketing_intelligence: bool = bool(input_data.get("AI_Marketing_Intelligence", False))
+        gemini_api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+        if ai_marketing_intelligence and not gemini_api_key:
+            await Actor.fail(
+                status_message="Missing GEMINI_API_KEY environment variable. "
+                "AI_Marketing_Intelligence is enabled, but GEMINI_API_KEY is not set."
+            )
+            return
 
         geo: str = input_data.get("geo", "US") or "US"
         hl: str = input_data.get("hl", "en") or "en"
@@ -79,7 +169,8 @@ async def main() -> None:
 
         Actor.log.info(
             f"Configuration — geo={geo}, hl={hl}, hours={hours}, "
-            f"cat={cat}, sort={sort}, status={status}, max_items={max_items}"
+            f"cat={cat}, sort={sort}, status={status}, max_items={max_items}, "
+            f"AI_Marketing_Intelligence={ai_marketing_intelligence}"
         )
 
         # ── 2. Build query parameters ──────────────────────────────
@@ -94,7 +185,7 @@ async def main() -> None:
         }
 
         # ── 3. Make the API request ─────────────────────────────────
-        Actor.log.info(f"Elaborating on Google Trending ...")
+        Actor.log.info("Elaborating on Google Trending ...")
 
         try:
             async with httpx.AsyncClient() as client:
@@ -143,8 +234,7 @@ async def main() -> None:
             Actor.log.info(f"Limiting trends to max_items={max_items} (from {len(trends)})")
             trends = trends[:max_items]
 
-        # ── 5. Push to Dataset ──────────────────────────────────────
-        Actor.log.info("Pushing each trend as an individual record to Dataset")
+        # ── 5. Prepare trends records ───────────────────────────────
         for trend in trends:
             trend["search_parameters"] = search_parameters
             # Resolve category IDs to human-readable descriptions
@@ -152,10 +242,38 @@ async def main() -> None:
             trend["category_description"] = [
                 CATEGORY_MAP.get(cid, f"Unknown ({cid})") for cid in cat_ids
             ]
+
+        # ── 6. AI Marketing Intelligence Enrichment ─────────────────
+        if ai_marketing_intelligence:
+            Actor.log.info("Enriching trends with AI Marketing Intelligence using Gemini API...")
+            system_instruction = os.environ.get("AI_MARKETING_PROMPT", "").strip() or DEFAULT_SYSTEM_INSTRUCTION
+            model = os.environ.get("MODEL", "").strip() or "gemini-2.5-flash-lite"
+            raw_temp = os.environ.get("AI_MARKETING_TEMPERATURE", "0.2")
+            try:
+                temperature = float(raw_temp)
+            except (ValueError, TypeError):
+                temperature = 0.2
+
+            try:
+                trends = enrich_trends_with_ai(
+                    trends_data=trends,
+                    api_key=gemini_api_key,
+                    system_instruction=system_instruction,
+                    model=model,
+                    temperature=temperature,
+                )
+            except Exception as exc:
+                await Actor.fail(
+                    status_message=f"AI Marketing Intelligence processing failed: {exc}"
+                )
+                return
+
+        # ── 7. Push to Dataset ──────────────────────────────────────
+        Actor.log.info("Pushing each trend as an individual record to Dataset")
         await Actor.push_data(trends)
         Actor.log.info(f"Pushed {len(trends)} trend records to Dataset")
 
-        # ── 6. Done ─────────────────────────────────────────────────
+        # ── 8. Done ─────────────────────────────────────────────────
         Actor.log.info("=" * 60)
         Actor.log.info("ACTOR COMPLETED SUCCESSFULLY")
         Actor.log.info("=" * 60)

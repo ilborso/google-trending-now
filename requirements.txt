@@ -3,3 +3,6 @@ apify
 
 # Async HTTP client
 httpx
+
+# Google Gemini SDK
+google-genai

@@ -921,6 +921,14 @@
             "editor": "number",
             "default": 2000,
             "minimum": 1
+        },
+        "AI_Marketing_Intelligence": {
+            "title": "AI Marketing Intelligence",
+            "sectionCaption": "AI Intelligence Options",
+            "type": "boolean",
+            "description": "Enrich each trending result with AI marketing intelligence insights using Google Gemini.",
+            "editor": "checkbox",
+            "default": false
         }
     },
     "required": [
