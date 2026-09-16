@@ -131,8 +131,8 @@ def enrich_trends_with_ai(
         return enriched_dataset
 
     except Exception as exc:
-        Actor.log.warning(f"Gemini API call failed: {exc}. Returning original trend dataset without AI enrichment.")
-        return trends_data
+        Actor.log.warning(f"Gemini API call failed: {exc}.")
+        raise exc
 
 
 async def main() -> None:
@@ -274,6 +274,8 @@ async def main() -> None:
                         model=model,
                         temperature=temperature,
                     )
+                    Actor.log.info("Charging event 'ai-enabled'")
+                    await Actor.charge(event_name="ai-enabled")
                 except Exception as exc:
                     Actor.log.warning(
                         f"AI Marketing Intelligence processing failed: {exc}. "
