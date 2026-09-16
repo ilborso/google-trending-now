@@ -98,6 +98,7 @@ def enrich_trends_with_ai(
             system_instruction=system_instruction,
             response_mime_type="application/json",
             temperature=temperature,
+            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
         ),
     )
 
