@@ -56,6 +56,40 @@
             "trend_url": {
                 "type": "string",
                 "description": "Link to explore this trend on Google Trends"
+            },
+            "ai_marketing_intelligence": {
+                "type": "object",
+                "description": "AI-generated marketing intelligence insights for the trend",
+                "properties": {
+                    "why_it_matters": {
+                        "type": "string",
+                        "description": "Short description of the trend context or trigger (max 15 words)"
+                    },
+                    "affected_sectors": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Relevant industry verticals (2-3 items)"
+                    },
+                    "marketing_angle": {
+                        "type": "string",
+                        "description": "Tactical idea for newsjacking, editorial plan, or content creation"
+                    },
+                    "paid_ads_advice": {
+                        "type": "string",
+                        "description": "Recommendation for Google Ads / Meta Ads"
+                    },
+                    "brand_safety_risk": {
+                        "type": "string",
+                        "enum": [
+                            "Low",
+                            "Medium",
+                            "High"
+                        ],
+                        "description": "Risk level for brand safety"
+                    }
+                }
             }
         }
     },
