@@ -81,6 +81,10 @@ def enrich_trends_with_ai(
             "title": item.get("title"),
             "category_description": item.get("category_description"),
             "growth_percentage": item.get("growth_percentage"),
+            "search_volume": item.get("search_volume"),
+            "related_queries": item.get("related_queries"),
+            "search_parameters": item.get("search_parameters"),
+            "hl": item.get("hl") or (item.get("search_parameters") or {}).get("hl"),
         }
         for item in trends_data
     ]
