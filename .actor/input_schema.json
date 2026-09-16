@@ -924,7 +924,7 @@
         },
         "AI_Marketing_Intelligence": {
             "title": "AI Marketing Intelligence",
-            "sectionCaption": "AI Intelligence Options",
+            "sectionCaption": "AI Intelligence Options (beta)",
             "type": "boolean",
             "description": "Enrich each trending result with AI marketing intelligence insights using Google Gemini.",
             "editor": "checkbox",
