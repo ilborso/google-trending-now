@@ -7,7 +7,8 @@ An Apify Actor that fetches real-time Google Trends data and saves the results t
 This Actor:
 1. Accepts configurable parameters (country, language, time window, category, sort order, status)
 2. Fetches the latest trending searches from Google Trends
-3. Returns structured data including titles, search volumes, growth percentages, and related queries
+3. Returns structured data including titles, search volumes, growth percentages, and related queries. 
+4. Perform for each terms a marketing analisys with a short description of the trend context or trigger (max 15 words) relevant industry verticals (2-3 items), tactical idea for newsjacking, editorial plan, or content creation, recommendation for Google Ads / Meta Ads, risk level for brand safety.
 
 Perfect for trend monitoring, content strategy, SEO research, market analysis, and real-time search intelligence.
 
@@ -16,6 +17,7 @@ Perfect for trend monitoring, content strategy, SEO research, market analysis, a
 - **Real-time data** — Access the latest Google Trends data as it happens
 - **Flexible filtering** — Filter by country, language, time window, category, and status
 - **Multiple sort options** — Sort by relevance, search volume, recency, or title
+- **Embedded AI Marketing intelligence** - AI Marketing analisys for each record via latest Gemini Flash Lite.
 - **Two output modes** — Get the full response or flattened records for easy table viewing
 - **20 category filters** — From Sports and Technology to Politics and Climate
 - **Production-ready** — Clean error handling with descriptive failure messages
