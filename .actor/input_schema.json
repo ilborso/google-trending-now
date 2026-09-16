@@ -920,6 +920,7 @@
             "description": "Maximum number of trending results to return.",
             "editor": "number",
             "default": 2000,
+            "prefill": 1,
             "minimum": 1
         },
         "AI_Marketing_Intelligence": {
