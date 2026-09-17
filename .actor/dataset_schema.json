@@ -88,6 +88,10 @@
                             "High"
                         ],
                         "description": "Risk level for brand safety"
+                    },
+                    "recent_news_link": {
+                        "type": "string",
+                        "description": "URL link to a news article or site about the trend"
                     }
                 }
             }

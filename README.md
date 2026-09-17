@@ -178,6 +178,7 @@ See some example:
 | `ai_marketing_intelligence.marketing_angle` | `string` | Tactical idea for newsjacking, editorial plan, or content creation |
 | `ai_marketing_intelligence.paid_ads_advice` | `string` | Recommendation for Google Ads / Meta Ads |
 | `ai_marketing_intelligence.brand_safety_risk` | `string` | Risk level for brand safety (`Low`, `Medium`, `High`) |
+| `ai_marketing_intelligence.recent_news_link` | `string` | URL link to a news article/site covering the trend |
 
 ## Example Input
 
@@ -319,7 +320,8 @@ Each trend is pushed as an individual record to the Apify Dataset, with `search_
       ],
       "marketing_angle": "Publish real-time elimination recaps and voting guides to capture high-intent search traffic.",
       "paid_ads_advice": "Increase bids on related show and voting queries during broadcast hours.",
-      "brand_safety_risk": "Low"
+      "brand_safety_risk": "Low",
+      "recent_news_link": "https://news.google.com/search?q=dancing+with+the+stars"
     }
   },
   {
@@ -396,7 +398,8 @@ Each trend is pushed as an individual record to the Apify Dataset, with `search_
       ],
       "marketing_angle": "Provide accurate, respectful, and updated news coverage adhering to sensitive breaking news protocols.",
       "paid_ads_advice": "Add as negative keyword across non-news commercial campaigns to prevent association with tragedy.",
-      "brand_safety_risk": "High"
+      "brand_safety_risk": "High",
+      "recent_news_link": "https://news.google.com/search?q=eliana+moreno"
     }
   }
 ]
