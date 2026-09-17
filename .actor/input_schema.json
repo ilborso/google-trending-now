@@ -927,7 +927,7 @@
             "title": "AI Marketing Intelligence",
             "sectionCaption": "AI Intelligence Options (beta)",
             "type": "boolean",
-            "description": "Enrich each trending result with AI marketing intelligence insights using Google Gemini.",
+            "description": "Enrich each trending result with AI marketing intelligence insights using Google Gemini. It adds: - Short description of the trend context or trigger (max 15 words) - Relevant industry verticals (2-3 items) - Tactical idea for newsjacking, editorial plan, or content creation - Recommendation for Google Ads / Meta Ads  - Risk level for brand safety (`Low`, `Medium`, `High`) - URL link to a news article/site covering the trend",
             "editor": "checkbox",
             "default": false
         }
