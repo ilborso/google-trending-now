@@ -56,7 +56,8 @@ For each analyzed item, generate the object with this structure:
     "affected_sectors": (array of 2-3 strings with relevant product sectors or verticals, e.g.: "E-commerce", "Food", "Sport Media"),
     "marketing_angle": (string: 1 tactical idea for newsjacking, editorial plan, or content creation),
     "paid_ads_advice": (string: recommendation for Google Ads/Meta Ads, e.g.: "Add as negative keyword", "Increase bid on related queries", or "No action"),
-    "brand_safety_risk": (string among: "Low", "Medium", "High")
+    "brand_safety_risk": (string among: "Low", "Medium", "High"),
+    "recent_news_link": (string: URL link to a news article or news site covering the trend)
   }
 
 Keep texts concise, dry, and action-oriented. Respond in the same language as the input.
